@@ -1,0 +1,53 @@
+# Course settings, read by slides/build_pptx.py (PowerPoint decks and the
+# Marp theme) and scripts/new_lesson.py (lesson and slide templates).
+# After changing the theme, run slides/marp/build.sh to regenerate the decks
+# and slides/marp/<theme name>.css.
+
+[course]
+title = "Course Title"
+# Shown in capitals above the title on every title slide
+programme = "Programme Name"
+institution = "Institution Name"
+# Written to the Author property of every PowerPoint deck
+author = "Programme Name"
+# Dictionary for scripts/check_spelling.sh (en_GB, en_US, ...)
+language = "en_GB"
+
+[theme]
+# Marp theme name: decks use `theme: <name>` and the theme is written to
+# slides/marp/<name>.css
+name = "course"
+
+# Colours are hex RGB without the #. Roles, not hues: change them freely.
+[theme.colours]
+primary = "003C3C"        # title, dark and takeaway backgrounds; headings
+secondary = "00695C"      # table headers, card badges, callout headings
+accent = "C75B12"         # step badges, time pills, programme label
+background = "FAF8F5"     # content slide background
+white = "FFFFFF"          # cards; text on dark slides
+text = "2D2D2D"           # body text
+muted = "666666"          # descriptions under bold titles
+callout = "E0F2EF"        # blockquote panels
+accent_light = "FBEDE3"   # time-pill and accent panel backgrounds
+positive = "2E7D32"       # ✓ column in compare slides
+negative = "C62828"       # ✗ column in compare slides
+border = "E0E0E0"         # card and table borders
+stripe = "F4F7F6"         # alternate table rows
+on_dark_muted = "C9D6D6"  # secondary text on dark slides
+code_dark = "0A2E2E"      # code blocks on dark slides
+page_number = "999999"
+page_number_dark = "668A8A"
+
+[theme.fonts]
+heading = "Georgia"
+body = "Calibri"
+# Font files used to measure text, so that line wrapping and overflow warnings
+# match PowerPoint. Looked up in the usual Windows, macOS and Linux font
+# folders (including /mnt/c/Windows/Fonts under WSL). If they are missing,
+# an average character width is used instead.
+heading_files = ["georgia.ttf", "georgiab.ttf"]  # regular, bold
+body_files = ["calibri.ttf", "calibrib.ttf"]
+# Substitutes for the Marp PDF preview where the fonts above aren't installed
+heading_fallback = "'Gelasio', 'DejaVu Serif', serif"
+body_fallback = "'Carlito', 'Liberation Sans', sans-serif"
+web_fonts = "https://fonts.googleapis.com/css2?family=Carlito:ital,wght@0,400;0,700;1,400&family=Gelasio:wght@400;600;700&display=swap"

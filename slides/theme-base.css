@@ -1,0 +1,443 @@
+/*
+ * Marp theme for the course slides: the rules shared by every course.
+ *
+ * slides/build_pptx.py adds the colours and fonts from course.toml as CSS
+ * variables and writes the result to slides/marp/<theme name>.css. The slide
+ * classes (title, cards, steps, compare, exercises, dark, takeaway) are
+ * described in slides/README.md. If you change a layout here, change the
+ * matching function in build_pptx.py too, so the PDF preview and the PPTX
+ * decks stay alike.
+ */
+
+/* ===== Base slide ===== */
+
+section {
+  width: 1280px;
+  height: 720px;
+  box-sizing: border-box;
+  padding: 48px 64px 40px;
+  background: var(--background);
+  color: var(--text);
+  font-family: var(--body-font);
+  font-size: 26px;
+  line-height: 1.4;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+section > * { margin: 0; }
+section > * + * { margin-top: 18px; }
+
+section::after {
+  content: attr(data-marp-pagination);
+  position: absolute;
+  right: 32px;
+  bottom: 18px;
+  font-size: 13px;
+  color: var(--page-number);
+}
+
+h1 {
+  font-family: var(--heading-font);
+  font-weight: 400;
+  font-size: 44px;
+  line-height: 1.15;
+  color: var(--primary);
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 30px;
+  color: var(--primary);
+}
+
+h3 {
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 27px;
+  color: var(--secondary);
+}
+
+strong { color: var(--primary); font-weight: 700; }
+em { font-style: italic; }
+a { color: var(--secondary); }
+
+ul, ol { padding-left: 1.2em; }
+li + li { margin-top: 8px; }
+li::marker { color: var(--accent); font-weight: 700; }
+
+code {
+  font-family: 'Consolas', 'DejaVu Sans Mono', monospace;
+  font-size: 0.85em;
+  background: var(--callout);
+  color: var(--primary);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+pre {
+  background: var(--primary);
+  color: var(--white);
+  border-radius: 8px;
+  padding: 16px 20px;
+  font-size: 18px;
+}
+pre code { background: none; color: inherit; padding: 0; }
+
+img.emoji { height: 1em; width: 1em; vertical-align: -0.12em; }
+
+/* ===== Callout panels ===== */
+
+blockquote {
+  background: var(--callout);
+  border-radius: 10px;
+  padding: 16px 22px;
+  color: var(--primary);
+  font-size: 22px;
+}
+blockquote > * { margin: 0; }
+blockquote > * + * { margin-top: 10px; }
+blockquote strong { color: var(--secondary); }
+
+/* A lead paragraph styled as a soft peach panel: start a paragraph with <mark> */
+p.lead, section > p:has(> mark:first-child) {
+  background: var(--accent-light);
+  border-radius: 10px;
+  padding: 14px 22px;
+}
+mark { background: none; color: inherit; }
+
+/* ===== Tables ===== */
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 23px;
+  background: var(--white);
+  box-shadow: var(--shadow);
+}
+th {
+  background: var(--secondary);
+  color: var(--white);
+  font-weight: 700;
+  text-align: left;
+  padding: 10px 16px;
+}
+td {
+  padding: 11px 18px;
+  border-bottom: 1px solid var(--border);
+}
+tbody tr:nth-child(even) td { background: var(--stripe); }
+
+/* ===== Title slide ===== */
+
+section.title {
+  background: var(--primary);
+  color: var(--white);
+  justify-content: center;
+  padding-left: 96px;
+}
+section.title::before,
+section.takeaway::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 100% 0%, rgba(255, 255, 255, 0.06) 0 300px, transparent 301px),
+    radial-gradient(circle at 92% 18%, rgba(255, 255, 255, 0.04) 0 170px, transparent 171px),
+    radial-gradient(circle at 0% 100%, color-mix(in srgb, var(--secondary) 55%, transparent) 0 210px, transparent 211px);
+}
+section.title > * { position: relative; }
+section.title h2 {
+  order: -1;
+  font-family: var(--body-font);
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 22px;
+}
+section.title h1 {
+  color: var(--white);
+  font-size: 72px;
+  max-width: 820px;
+  margin: 0;
+}
+section.title h1 + p { margin-top: 32px; font-size: 30px; }
+section.title p { color: rgba(255, 255, 255, 0.85); }
+section.title p:last-child { margin-top: 64px; font-size: 18px; color: var(--accent); }
+section.title::after { display: none; }
+
+/* ===== Dark & takeaway slides ===== */
+
+section.dark,
+section.takeaway {
+  background: var(--primary);
+  color: rgba(255, 255, 255, 0.9);
+}
+section.dark h1, section.takeaway h1 { color: var(--white); }
+section.dark h2, section.dark h3 { color: var(--accent); }
+section.dark strong, section.takeaway strong { color: var(--white); }
+section.dark::after, section.takeaway::after { color: rgba(255, 255, 255, 0.4); }
+section.dark blockquote {
+  background: rgba(255, 255, 255, 0.07);
+  color: var(--white);
+  font-size: 26px;
+  padding: 22px 28px;
+}
+section.dark blockquote strong { color: var(--accent); display: block; font-size: 18px; }
+section.dark td { color: var(--white); border-bottom-color: rgba(255, 255, 255, 0.15); background: transparent; }
+section.dark tbody tr:nth-child(even) td { background: rgba(255, 255, 255, 0.05); }
+section.dark th { background: var(--accent); }
+section.dark table { background: transparent; box-shadow: none; }
+
+/* ===== Numbered rows: steps, takeaway ===== */
+
+section.steps ol,
+section.takeaway ol,
+section.dark ol {
+  list-style: none;
+  padding: 0;
+  counter-reset: n;
+}
+section.steps ol > li,
+section.takeaway ol > li,
+section.dark ol > li {
+  counter-increment: n;
+  position: relative;
+  padding-left: 58px;
+  min-height: 40px;
+}
+section.steps ol > li + li { margin-top: 12px; }
+section.steps ol > li::before,
+section.takeaway ol > li::before,
+section.dark ol > li::before {
+  content: counter(n);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--white);
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section.steps li strong,
+section.takeaway li strong { display: inline-block; }
+section.steps ol > li { font-size: 21px; color: var(--muted); line-height: 1.3; }
+section.steps ol > li > strong:first-child {
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 25px;
+  margin-bottom: 2px;
+}
+
+/* Side panel: steps list followed by a blockquote */
+section.steps:has(> blockquote) {
+  display: grid;
+  grid-template-columns: 1fr 400px;
+  grid-template-rows: auto 1fr;
+  column-gap: 40px;
+  align-content: start;
+}
+section.steps:has(> blockquote) > h1 { grid-column: 1 / -1; }
+section.steps:has(> blockquote) > blockquote {
+  margin-top: 18px;
+  align-self: start;
+  padding: 24px 28px;
+  font-size: 22px;
+}
+
+/* Boxed rows with teal badges (e.g. Key Concepts) */
+section.steps.teal ol > li {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 14px 20px 14px 76px;
+  box-shadow: var(--shadow);
+}
+section.steps.teal ol > li + li { margin-top: 14px; }
+section.steps.teal ol > li::before {
+  background: var(--primary);
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Dark slide rows (e.g. Live Demo) */
+section.dark ol > li {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 18px 22px 18px 76px;
+  min-height: 0;
+  font-size: 25px;
+}
+section.dark ol > li + li { margin-top: 10px; }
+section.dark ol > li::before { left: 18px; top: 50%; transform: translateY(-50%); }
+
+/* Takeaway cards */
+section.takeaway ol > li {
+  background: rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 22px 26px 22px 86px;
+  font-size: 21px;
+  color: rgba(255, 255, 255, 0.75);
+  position: relative;
+}
+section.takeaway ol > li + li { margin-top: 18px; }
+section.takeaway ol > li::before { left: 22px; top: 50%; transform: translateY(-50%); }
+section.takeaway ol > li > strong:first-child { font-size: 27px; margin-bottom: 4px; }
+section.takeaway > * { position: relative; }
+
+/* ===== Cards grid ===== */
+
+section.cards ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 26px;
+  counter-reset: n;
+}
+section.cards.cols-3 ul { grid-template-columns: repeat(3, 1fr); }
+section.cards ul > li {
+  margin: 0;
+  counter-increment: n;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+  padding: 28px 28px 28px 92px;
+  position: relative;
+  font-size: 21px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+section.cards ul > li::before {
+  content: counter(n);
+  position: absolute;
+  left: 24px;
+  top: 22px;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--callout);
+  color: var(--secondary);
+  font-weight: 700;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+section.cards ul > li > strong:first-child {
+  display: inline-block;
+  font-family: var(--heading-font);
+  font-weight: 600;
+  font-size: 27px;
+  margin-bottom: 8px;
+}
+
+/* Un-numbered cards with coloured top bars, cycling teal / copper / primary */
+section.cards.plain ul > li { padding: 22px 24px; border-top: 5px solid var(--secondary); }
+section.cards.plain ul > li::before { display: none; }
+section.cards.plain ul > li:nth-child(3n+2) { border-top-color: var(--accent); }
+section.cards.plain ul > li:nth-child(3n+2) > strong:first-child { color: var(--accent); }
+section.cards.plain ul > li:nth-child(3n) { border-top-color: var(--primary); }
+
+/* ===== Compare (two columns) ===== */
+
+section.compare {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto 1fr;
+  column-gap: 28px;
+  row-gap: 0;
+  align-content: start;
+}
+section.compare > * { margin: 0; }
+section.compare > h1 { grid-column: 1 / -1; margin-bottom: 22px; }
+section.compare > :not(h1, h3, ul) { grid-column: 1 / -1; margin-top: 22px; }
+section.compare > h3 {
+  grid-row: 2;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-top: 5px solid var(--positive);
+  border-radius: 10px 10px 0 0;
+  padding: 18px 26px 8px;
+  font-size: 28px;
+  color: var(--positive);
+}
+section.compare > h3 ~ h3 { border-top-color: var(--negative); color: var(--negative); }
+section.compare > ul {
+  grid-row: 3;
+  align-self: start;
+  list-style: none;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 10px 10px;
+  padding: 10px 26px 22px;
+  font-size: 23px;
+}
+section.compare > ul > li { padding-left: 30px; position: relative; }
+section.compare > ul > li + li { margin-top: 16px; }
+section.compare > ul > li::before {
+  content: '✓';
+  position: absolute;
+  left: 0;
+  color: var(--positive);
+  font-weight: 700;
+}
+section.compare > ul ~ ul > li::before { content: '✗'; color: var(--negative); }
+
+/* ===== Exercises ===== */
+
+section.exercises > h3 {
+  margin-top: 22px;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-bottom: none;
+  border-left: 6px solid var(--accent);
+  border-radius: 10px 10px 0 0;
+  padding: 20px 28px 6px;
+  color: var(--primary);
+  font-size: 27px;
+}
+section.exercises > h1 + h3 { margin-top: 4px; }
+section.exercises > h3 em {
+  font-family: var(--body-font);
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--white);
+  background: var(--accent);
+  border-radius: 999px;
+  padding: 3px 12px;
+  margin-left: 10px;
+  vertical-align: 3px;
+}
+section.exercises > h3 + p {
+  margin-top: 0;
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-left: 6px solid var(--accent);
+  border-radius: 0 0 10px 10px;
+  padding: 2px 28px 20px;
+  font-size: 22px;
+  color: var(--muted);
+  box-shadow: var(--shadow);
+}

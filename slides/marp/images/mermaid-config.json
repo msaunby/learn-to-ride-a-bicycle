@@ -1,0 +1,25 @@
+{
+    "theme": "base",
+    "themeVariables": {
+        "fontFamily": "Calibri, Arial, sans-serif",
+        "fontSize": "18px",
+        "primaryColor": "#003C3C",
+        "primaryTextColor": "#FFFFFF",
+        "cScale0": "#00695C",
+        "cScaleLabel0": "#FFFFFF",
+        "cScale1": "#C75B12",
+        "cScaleLabel1": "#FFFFFF",
+        "cScale2": "#2E5E8C",
+        "cScaleLabel2": "#FFFFFF",
+        "cScale3": "#6A5D8F",
+        "cScaleLabel3": "#FFFFFF",
+        "cScale4": "#8A6D1F",
+        "cScaleLabel4": "#FFFFFF",
+        "cScale5": "#00695C",
+        "cScaleLabel5": "#FFFFFF",
+        "git0": "#003C3C",
+        "gitBranchLabel0": "#FFFFFF",
+        "cScalePeer0": "#003C3C"
+    },
+    "themeCSS": ".section-root rect, .section-root path, .section-root circle {fill:#003C3C !important;} .section-root text {fill:#FFFFFF !important;}"
+}

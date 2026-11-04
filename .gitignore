@@ -1,0 +1,4 @@
+# Slide decks are distributed as GitHub Release assets (see AGENTS.md)
+slides/*.pptx
+# PDF previews built by slides/marp/build.sh
+slides/output/
